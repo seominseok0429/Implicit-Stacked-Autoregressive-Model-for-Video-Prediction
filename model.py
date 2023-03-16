@@ -54,6 +54,22 @@ class Encoder(nn.Module):
             latent = self.enc[i](latent)
         return latent,enc1
 
+class LP(nn.Module):
+    def __init__(self,C_in, C_hid, N_S):
+        super(LP,self).__init__()
+        strides = stride_generator(N_S)
+        self.enc = nn.Sequential(
+            ConvSC(C_in, C_hid, stride=strides[0]),
+            *[ConvSC(C_hid, C_hid, stride=s) for s in strides[1:]]
+        )
+
+    def forward(self,x):# B*4, 3, 128, 128
+        enc1 = self.enc[0](x)
+        latent = enc1
+        for i in range(1,len(self.enc)):
+            latent = self.enc[i](latent)
+        return latent,enc1
+
 
 class Decoder(nn.Module):
     def __init__(self,C_hid, C_out, N_S):
@@ -106,6 +122,8 @@ class IAM4VP(nn.Module):
         self.attn = Attention(64)
         self.readout = nn.Conv2d(64, 1, 1)
         self.mask_token = nn.Parameter(torch.zeros(10, hid_S, 16, 16))
+        self.lp = LP(C, hid_S, N_S)
+
 
     def random_masking(self, z, t):
         B, T, C , H, W = z.shape
