@@ -2,6 +2,8 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/implicit-stacked-autoregressive-model-for-1/video-prediction-on-moving-mnist)](https://paperswithcode.com/sota/video-prediction-on-moving-mnist?p=implicit-stacked-autoregressive-model-for-1)
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/implicit-stacked-autoregressive-model-for-1/weather-forecasting-on-sevir)](https://paperswithcode.com/sota/weather-forecasting-on-sevir?p=implicit-stacked-autoregressive-model-for-1)
+
 
 ## Thank to
 
