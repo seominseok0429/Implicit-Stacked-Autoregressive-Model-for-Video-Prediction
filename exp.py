@@ -32,7 +32,7 @@ class Exp:
         self.step = 0
 
         self.t_sample = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-        
+
     def reset_parameters(self):
         self.ema_model.load_state_dict(self.model.state_dict())
 
@@ -177,7 +177,9 @@ class Exp:
         total_loss = np.average(total_loss)
         preds = np.concatenate(preds_lst, axis=0)
         trues = np.concatenate(trues_lst, axis=0)
-        mse, mae, ssim, psnr = metric(preds, trues, vali_loader.dataset.mean, vali_loader.dataset.std, True)
+        mse, mae, t_mae, ssim, psnr = metric(preds, trues, vali_loader.dataset.mean, vali_loader.dataset.std, True)
+        self.t_sample = t_mae/np.sum(t_mae)
+
         print_log('vali mse:{:.4f}, mae:{:.4f}, ssim:{:.4f}, psnr:{:.4f}'.format(mse, mae, ssim, psnr))
         self.model.train()
         return total_loss
