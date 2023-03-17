@@ -16,8 +16,6 @@
 
 ## TODO
 
-Need to fix exp.py
-
 Need to add readme file.
 
 
