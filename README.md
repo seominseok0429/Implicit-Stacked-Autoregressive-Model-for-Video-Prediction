@@ -1,6 +1,11 @@
 # Implicit Stacked Autoregressive Model for Video Prediction
-
----
+### [Project Page](-) | [Video](-) | [Paper](https://arxiv.org/abs/2003.08934) | 
+ [Minseok Seo](https://sites.google.com/view/minseokcv/%ED%99%88),
+ [Hakjin Lee](-),
+ [Doyi Kim](-),
+ [Junghoon Seo](-),
+<br>
+ SI Analytics  
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/implicit-stacked-autoregressive-model-for-1/video-prediction-on-human36m)](https://paperswithcode.com/sota/video-prediction-on-human36m?p=implicit-stacked-autoregressive-model-for-1)
 
@@ -8,7 +13,8 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/implicit-stacked-autoregressive-model-for-1/weather-forecasting-on-sevir)](https://paperswithcode.com/sota/weather-forecasting-on-sevir?p=implicit-stacked-autoregressive-model-for-1)
 
-----
+
+---
 <p align="center">
 <img width="704" alt="image" src="https://user-images.githubusercontent.com/33244972/225778106-3c5c6a62-8a8c-46dc-93ea-92a82fd8ab95.png">
 </p>
