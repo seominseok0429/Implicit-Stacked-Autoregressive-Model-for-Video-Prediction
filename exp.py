@@ -31,6 +31,8 @@ class Exp:
         self.step_start_ema = 2000
         self.step = 0
 
+        self.t_sample = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+        
     def reset_parameters(self):
         self.ema_model.load_state_dict(self.model.state_dict())
 
@@ -114,7 +116,7 @@ class Exp:
             for batch_x, batch_y in train_pbar:
                 self.optimizer.zero_grad()
                 batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
-                t = np.random.choice(10, batch_x.shape[0])
+                t = np.random.choice(10, batch_x.shape[0], p=self.t_sample)
                 batch_y_t = []
                 for i in range(len(t)):
                     batch_y_t.append(batch_y[i, t[i], :, :, :])
