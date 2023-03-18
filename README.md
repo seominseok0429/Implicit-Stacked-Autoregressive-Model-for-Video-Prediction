@@ -1,9 +1,9 @@
 # Implicit Stacked Autoregressive Model for Video Prediction
-### [Project Page](-) | [Video](-) | [Paper](https://arxiv.org/abs/2003.08934) | 
+### [Project Page](-) | [Video](-) | [Paper](https://arxiv.org/pdf/2303.07849.pdf) | 
  [Minseok Seo](https://sites.google.com/view/minseokcv/%ED%99%88),
- [Hakjin Lee](-),
+ [Hakjin Lee](https://github.com/nijkah),
  [Doyi Kim](-),
- [Junghoon Seo](-),
+ [Junghoon Seo](https://mikigom.github.io),
 <br>
  SI Analytics  
 
