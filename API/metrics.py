@@ -16,7 +16,7 @@ def PSNR(pred, true):
 def metric(pred, true, mean, std, return_ssim_psnr=False, clip_range=[0, 1]):
     pred = pred*std + mean
     true = true*std + mean
-    mae = MAE(pred, true)
+    mae, tmae = MAE(pred, true)
     mse = MSE(pred, true)
 
     if return_ssim_psnr:
@@ -29,6 +29,6 @@ def metric(pred, true, mean, std, return_ssim_psnr=False, clip_range=[0, 1]):
                 psnr += PSNR(pred[b, f], true[b, f])
         ssim = ssim / (pred.shape[0] * pred.shape[1])
         psnr = psnr / (pred.shape[0] * pred.shape[1])
-        return mse, mae, ssim, psnr
+        return mse, mae, tmae, ssim, psnr
     else:
         return mse, mae
