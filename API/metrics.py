@@ -2,7 +2,11 @@ import numpy as np
 from skimage.metrics import structural_similarity as cal_ssim
 
 def MAE(pred, true):
-    return np.mean(np.abs(pred-true),axis=(0,1)).sum()
+    _pred = np.transpose(pred, (1, 0, 2, 3, 4))
+    _true = np.transpose(true, (1, 0, 2, 3, 4))
+    tmae = np.sum(np.mean(np.abs(_pred-_true),axis=1), axis=(1,2,3))
+
+    return np.mean(np.abs(pred-true),axis=(0,1)).sum(), tmae
 
 def MSE(pred, true):
     return np.mean((pred-true)**2,axis=(0,1)).sum()
