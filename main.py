@@ -26,7 +26,7 @@ def create_parser():
     parser.add_argument('--hid_S', default=64, type=int)
     parser.add_argument('--hid_T', default=512, type=int)
     parser.add_argument('--N_S', default=4, type=int)
-    parser.add_argument('--N_T', default=3, type=int)
+    parser.add_argument('--N_T', default=6, type=int)
     parser.add_argument('--groups', default=4, type=int)
 
     # Training parameters
