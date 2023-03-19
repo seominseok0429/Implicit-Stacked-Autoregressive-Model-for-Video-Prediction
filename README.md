@@ -25,6 +25,10 @@ Need to add readme file.
 
 Need to add fine-tuning LP(Learnd Prior).
 
+## Requirements
+```
+scikit-image==0.16.1
+```
 ## Moving MNIST
 
 ```
