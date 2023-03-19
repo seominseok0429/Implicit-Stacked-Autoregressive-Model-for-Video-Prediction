@@ -19,10 +19,16 @@
 <img width="704" alt="image" src="https://user-images.githubusercontent.com/33244972/225778106-3c5c6a62-8a8c-46dc-93ea-92a82fd8ab95.png">
 </p>
 
-
 ## TODO
 
 Need to add readme file.
+
+## Moving MNIST
+
+```
+sh data/moving_mnist/download_mmnist.sh
+python3 main.py
+```
 
 
 ## Thank to
