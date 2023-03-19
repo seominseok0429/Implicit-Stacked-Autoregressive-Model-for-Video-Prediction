@@ -22,6 +22,7 @@
 ## TODO
 
 Need to add readme file.
+Need to add fine-tuning LP(Learnd Prior).
 
 ## Moving MNIST
 
