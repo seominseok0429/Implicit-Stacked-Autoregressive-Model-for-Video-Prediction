@@ -123,8 +123,18 @@ class IAM4VP(nn.Module):
         self.readout = nn.Conv2d(64, 1, 1)
         self.mask_token = nn.Parameter(torch.zeros(10, hid_S, 16, 16))
         self.lp = LP(C, hid_S, N_S)
-
-
+    """ remove for loop.
+    def random_masking(z, mask_ratio=0.75):
+        B, T, C, H, W = z.shape
+        len_keep = int(T * (1. - mask_ratio))
+        noise = torch.rand(B, T, device=z.device)
+        ids_shuffle = torch.argsort(noise, dim=1)
+        mask = torch.ones(B, T, device=z.device)
+        mask.scatter_(1, ids_shuffle[:, :len_keep], 0)
+        mask = mask.bool()
+        z[mask] = 0
+        return z
+    """
     def random_masking(self, z, t):
         B, T, C , H, W = z.shape
         for i in range(B):
