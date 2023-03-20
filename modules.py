@@ -267,7 +267,7 @@ class Learnable_Filter(nn.Module):
         if stride != 1 or inplanes != planes * block.expansion:
             downsample = nn.Sequential(
                 nn.Conv2d(inplanes, planes * block.expansion, kernel_size=1, stride=stride, bias=False),
-                nn.GroupNorm(2, planes * block.expansion),
+                LayerNorm(planes * block.expansion, eps=1e-6, data_format="channels_first"),
             )
 
         layers = []
