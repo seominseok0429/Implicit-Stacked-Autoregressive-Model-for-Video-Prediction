@@ -154,7 +154,7 @@ class IAM4VP(nn.Module):
         time_emb = self.time_mlp(t)
 
         embed, skip = self.enc(x)
-        embed2, _ = self.enc(x)
+        embed2, _ = self.enc(y)
 
         _, C_, H_, W_ = embed.shape
 
