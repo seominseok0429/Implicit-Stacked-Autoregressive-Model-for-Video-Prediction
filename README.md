@@ -19,6 +19,12 @@
 <img width="704" alt="image" src="https://user-images.githubusercontent.com/33244972/225778106-3c5c6a62-8a8c-46dc-93ea-92a82fd8ab95.png">
 </p>
 
+## NEWS
+
+### Ours typhoon dataset will be open!! [2023.06.01]
+
+![gt](https://user-images.githubusercontent.com/33244972/228428350-33d705c7-61ee-4f08-b5f3-8b42c57a6ffb.gif)
+
 ## TODO
 
 Need to add readme file.
