@@ -135,10 +135,10 @@ class IAM4VP(nn.Module):
         z[mask] = 0
         return z
     """
-    def random_masking(self, z, t):
+    def random_masking_train(self, z, t):
         B, T, C , H, W = z.shape
         for i in range(B):
-            rand_index = random.choices([0,1], weights=[0.5, 0.5], k=10)
+            rand_index = random.choices([0,1], weights=[0.75, 0.25], k=10)
             for index, j in enumerate(rand_index):
                 if j==0:
                     z[i,index,:,:,:] = self.mask_token[index,:,:,:]
@@ -146,37 +146,61 @@ class IAM4VP(nn.Module):
                     z[i,index,:,:,:] = self.mask_token[index,:,:,:]
         return z
 
-    def forward(self, x_raw, y_raw=None, t=None):
-        B, T, C, H, W = x_raw.shape
-        x = x_raw.view(B*T, C, H, W)
-        y = y_raw.view(B*T, C, H, W)
+    def forward(self, x_raw, y_raw=None, t=None, is_train=True):
+        if is_train==True:
+            B, T, C, H, W = x_raw.shape
+            x = x_raw.view(B*T, C, H, W)
+            y = y_raw.view(B*T, C, H, W)
 
-        time_emb = self.time_mlp(t)
+            time_emb = self.time_mlp(t)
 
-        embed, skip = self.enc(x)
-        embed2, _ = self.enc(y)
+            embed, skip = self.enc(x)
+            embed2, _ = self.enc(y)
 
-        _, C_, H_, W_ = embed.shape
+            _, C_, H_, W_ = embed.shape
 
-        z = embed.view(B, T, C_, H_, W_)
-        z2 = embed2.view(B, T, C_, H_, W_)
+            z = embed.view(B, T, C_, H_, W_)
+            z2 = embed2.view(B, T, C_, H_, W_)
 
-        z2 = self.random_masking(z2, t)
-        z = torch.cat([z, z2], dim=1)
-        hid = self.hid(z, time_emb)
-        hid = hid.reshape(B*T, C_, H_, W_)
+            z2 = self.random_masking_train(z2, t)
+            z = torch.cat([z, z2], dim=1)
+            hid = self.hid(z, time_emb)
+            hid = hid.reshape(B*T, C_, H_, W_)
 
-        Y = self.dec(hid, skip)
-        Y = self.attn(Y)
-        Y = self.readout(Y)
-        return Y
+            Y = self.dec(hid, skip)
+            Y = self.attn(Y)
+            Y = self.readout(Y)
+            return Y
+        else:
+            B, T, C, H, W = x_raw.shape
+            x = x_raw.view(B*T, C, H, W)
+            time_emb = self.time_mlp(t)
+            embed, skip = self.enc(x)
+            mask_token = self.mask_token.repeat(B,1,1,1,1)
+            for idx, pred in enumerate(y_raw):
+                embed2,_ = self.enc(pred)
+                mask_token[:,idx,:,:,:] = embed2
+
+            _, C_, H_, W_ = embed.shape
+
+            z = embed.view(B, T, C_, H_, W_)
+            z2 = mask_token
+            z = torch.cat([z, z2], dim=1)
+            hid = self.hid(z, time_emb)
+            hid = hid.reshape(B*T, C_, H_, W_)
+
+            Y = self.dec(hid, skip)
+            Y = self.attn(Y)
+            Y = self.readout(Y)
+            return Y
 
 if __name__ == "__main__":
     import numpy as np
     model = IAM4VP([10,1,64,64])
     inputs = torch.randn(2,10, 1,64,64)
     inputs2 = torch.randn(2,10, 1,64,64)
-    t = np.random.choice(10, 2)
-    t = torch.tensor(t)*100
-    b = model(x_raw=inputs, y_raw=inputs2, t=t)
-    print(b.shape)
+    pred_list = []
+    for timestep in range(10):
+        t = torch.tensor(timestep*100).repeat(inputs.shape[0])
+        out = model(inputs, y_raw=pred_list, t=t, is_train=False)
+        pred_list.append(out)

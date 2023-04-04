@@ -90,7 +90,8 @@ class ConvNeXt_block(nn.Module):
             nn.GELU(),
             nn.Linear(64, dim)
         )
-        self.dwconv = nn.Conv2d(dim, dim, kernel_size=7, padding=3, groups=dim) # depthwise conv
+        #self.dwconv = nn.Conv2d(dim, dim, kernel_size=7, padding=3, groups=dim) # depthwise conv
+        self.dwconv = LKA(dim)
         self.norm = LayerNorm(dim, eps=1e-6)
         self.pwconv1 = nn.Linear(dim, 4 * dim) # pointwise/1x1 convs, implemented with linear layers
         self.act = nn.GELU()
@@ -134,6 +135,7 @@ class ConvNeXt_bottle(nn.Module):
             nn.Linear(64, dim)
         )
         self.dwconv = nn.Conv2d(dim*2, dim, kernel_size=7, padding=3, groups=dim) # depthwise conv
+        #self.dwconv = LKA(dim)
         self.norm = LayerNorm(dim, eps=1e-6)
         self.pwconv1 = nn.Linear(dim, 4 * dim) # pointwise/1x1 convs, implemented with linear layers
         self.act = nn.GELU()

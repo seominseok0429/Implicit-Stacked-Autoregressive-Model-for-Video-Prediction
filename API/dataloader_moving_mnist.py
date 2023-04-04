@@ -1,11 +1,31 @@
 
 import os
 import gzip
+import math
 import random
 import numpy as np
 import torch
 import torch.utils.data as data
+import torchvision.transforms as transforms
+import torchvision.transforms.functional as F
 
+from scipy import ndimage
+
+class RandomNoise:
+    def __init__(self, mean=0.0, std=0.1):
+        self.mean = mean
+        self.std = std
+
+    def __call__(self, img):
+        noise = torch.randn_like(img) * self.std + self.mean
+        img = img + noise
+        img = torch.clamp(img, 0, 1)
+        return img
+
+augmentation_pipeline = transforms.Compose([
+    transforms.GaussianBlur(kernel_size=7, sigma=(0.1,2.0)),
+    RandomNoise(mean=0.0, std=0.1),
+])
 
 def load_mnist(root):
     # Load MNIST dataset for generating training data.
@@ -137,7 +157,8 @@ class MovingMNIST(data.Dataset):
 
         output = torch.from_numpy(output / 255.0).contiguous().float()
         input = torch.from_numpy(input / 255.0).contiguous().float()
-        return input, output
+        output2 = augmentation_pipeline(output)
+        return input, output, output2
 
     def __len__(self):
         return self.length

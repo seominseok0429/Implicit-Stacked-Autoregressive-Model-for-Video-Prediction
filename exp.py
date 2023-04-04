@@ -113,16 +113,16 @@ class Exp:
             self.model.train()
             train_pbar = tqdm(self.train_loader)
 
-            for batch_x, batch_y in train_pbar:
+            for batch_x, batch_y, batch_y2  in train_pbar:
                 self.optimizer.zero_grad()
-                batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
+                batch_x, batch_y, batch_y2 = batch_x.to(self.device), batch_y.to(self.device), batch_y2.to(self.device)
                 t = np.random.choice(10, batch_x.shape[0], p=self.t_sample)
                 batch_y_t = []
                 for i in range(len(t)):
                     batch_y_t.append(batch_y[i, t[i], :, :, :])
                 batch_y_t  = torch.cat(batch_y_t, dim=0).unsqueeze(1)
                 t = torch.tensor(t*100).cuda()
-                pred_y = self.model(batch_x, batch_y, t)
+                pred_y = self.model(batch_x, batch_y2, t, is_train=True)
                 loss = self.criterion(pred_y, batch_y_t)
                 train_loss.append(loss.item())
                 train_pbar.set_description('train loss: {:.4f}'.format(loss.item()))
@@ -154,15 +154,15 @@ class Exp:
         self.model.eval()
         preds_lst, trues_lst, total_loss = [], [], []
         vali_pbar = tqdm(vali_loader)
-        for i, (batch_x, batch_y) in enumerate(vali_pbar):
+        for i, (batch_x, batch_y, batch_y2) in enumerate(vali_pbar):
             if i * batch_x.shape[0] > 1000:
                 break
 
-            batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
+            batch_x, batch_y,_ = batch_x.to(self.device), batch_y.to(self.device), batch_y2
             pred_list = []
             for timestep in range(10):
                 t = torch.tensor(timestep*100).repeat(batch_x.shape[0]).cuda()
-                pred_y = self.ema_model(batch_x, batch_y, t)
+                pred_y = self.ema_model(batch_x, pred_list, t, is_train=False)
                 pred_list.append(pred_y)
             pred_y = torch.cat(pred_list, dim=1).unsqueeze(2)
 
