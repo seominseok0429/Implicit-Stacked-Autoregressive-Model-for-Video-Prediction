@@ -33,8 +33,6 @@ Need to add readme file.
 
 Need to add fine-tuning LP(Learnd Prior).
 
-Need to add test code.
-
 ## Requirements
 ```
 scikit-image==0.16.1
