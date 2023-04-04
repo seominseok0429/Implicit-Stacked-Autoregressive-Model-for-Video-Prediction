@@ -9,23 +9,13 @@ import torch.utils.data as data
 import torchvision.transforms as transforms
 import torchvision.transforms.functional as F
 
-from scipy import ndimage
+import albumentations as A
 
-class RandomNoise:
-    def __init__(self, mean=0.0, std=0.1):
-        self.mean = mean
-        self.std = std
-
-    def __call__(self, img):
-        noise = torch.randn_like(img) * self.std + self.mean
-        img = img + noise
-        img = torch.clamp(img, 0, 1)
-        return img
-
-augmentation_pipeline = transforms.Compose([
-    transforms.GaussianBlur(kernel_size=7, sigma=(0.1,2.0)),
-    RandomNoise(mean=0.0, std=0.1),
+transform = A.Compose([
+    A.MotionBlur(blur_limit=13, allow_shifted=True, always_apply=False, p=0.5),
+    A.GaussNoise(var_limit=(10.0, 50.0), mean=0, p=0.5),
 ])
+
 
 def load_mnist(root):
     # Load MNIST dataset for generating training data.
@@ -154,11 +144,16 @@ class MovingMNIST(data.Dataset):
             output = images[self.n_frames_input:length]
         else:
             output = []
+        output2 = copy.deepcopy(output)
+        output22 = []
+        for i in range(10):
+            output22.append(transform(image=output2[i,:,:,:])['image'])
+        output22 = np.stack(output22, axis=0)
 
         output = torch.from_numpy(output / 255.0).contiguous().float()
+        output22 = torch.from_numpy(output22 / 255.0).contiguous().float()
         input = torch.from_numpy(input / 255.0).contiguous().float()
-        output2 = augmentation_pipeline(output)
-        return input, output, output2
+        return input, output, output22
 
     def __len__(self):
         return self.length
