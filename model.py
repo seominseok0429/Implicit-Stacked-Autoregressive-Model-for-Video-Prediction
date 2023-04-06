@@ -138,7 +138,7 @@ class IAM4VP(nn.Module):
     def random_masking_train(self, z, t):
         B, T, C , H, W = z.shape
         for i in range(B):
-            rand_index = random.choices([0,1], weights=[0.75, 0.25], k=10)
+            rand_index = random.choices([0,1], weights=[0.5, 0.5], k=10)
             for index, j in enumerate(rand_index):
                 if j==0:
                     z[i,index,:,:,:] = self.mask_token[index,:,:,:]
