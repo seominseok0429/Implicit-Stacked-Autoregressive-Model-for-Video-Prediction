@@ -160,7 +160,7 @@ class IAM4VP(nn.Module):
             _, C_, H_, W_ = embed.shape
 
             z = embed.view(B, T, C_, H_, W_)
-            z2 = embed2.view(B, T, C_, H_, W_)
+            z2 = embed2.lp(B, T, C_, H_, W_)
 
             z2 = self.random_masking_train(z2, t)
             z = torch.cat([z, z2], dim=1)
@@ -178,7 +178,7 @@ class IAM4VP(nn.Module):
             embed, skip = self.enc(x)
             mask_token = self.mask_token.repeat(B,1,1,1,1)
             for idx, pred in enumerate(y_raw):
-                embed2,_ = self.enc(pred)
+                embed2,_ = self.lp(pred)
                 mask_token[:,idx,:,:,:] = embed2
 
             _, C_, H_, W_ = embed.shape
