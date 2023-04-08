@@ -1,20 +1,10 @@
 
-import os
+ import os
 import gzip
-import math
 import random
 import numpy as np
 import torch
 import torch.utils.data as data
-import torchvision.transforms as transforms
-import torchvision.transforms.functional as F
-
-import albumentations as A
-
-transform = A.Compose([
-    A.MotionBlur(blur_limit=13, allow_shifted=True, always_apply=False, p=0.5),
-    A.GaussNoise(var_limit=(10.0, 50.0), mean=0, p=0.5),
-])
 
 
 def load_mnist(root):
@@ -144,16 +134,10 @@ class MovingMNIST(data.Dataset):
             output = images[self.n_frames_input:length]
         else:
             output = []
-        output2 = copy.deepcopy(output)
-        output22 = []
-        for i in range(10):
-            output22.append(transform(image=output2[i,:,:,:])['image'])
-        output22 = np.stack(output22, axis=0)
 
         output = torch.from_numpy(output / 255.0).contiguous().float()
-        output22 = torch.from_numpy(output22 / 255.0).contiguous().float()
         input = torch.from_numpy(input / 255.0).contiguous().float()
-        return input, output, output22
+        return input, output
 
     def __len__(self):
         return self.length
