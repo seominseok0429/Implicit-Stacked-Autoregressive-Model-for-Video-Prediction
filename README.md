@@ -24,6 +24,8 @@
 ### Our typhoon data set and experimental results will be published soon. [2023.06.01] 
 (This is not included in our report. prediction +10 hours)
 
+### The current code takes longer to train than this paper, but has been updated to a much higher performance version.
+
 ### I'm busy with other things, so code refactoring is delayed. [But,the code still works as it should now.] We are currently allowing everyone to push our code refactoring!
 
 
