@@ -46,7 +46,7 @@ class Encoder(nn.Module):
             ConvSC(C_in, C_hid, stride=strides[0]),
             *[ConvSC(C_hid, C_hid, stride=s) for s in strides[1:]]
         )
-    
+
     def forward(self,x):# B*4, 3, 128, 128
         enc1 = self.enc[0](x)
         latent = enc1
@@ -80,7 +80,7 @@ class Decoder(nn.Module):
             ConvSC(2*C_hid, C_hid, stride=strides[-1], transpose=True)
         )
         self.readout = nn.Conv2d(640, 64, 1)
-    
+
     def forward(self, hid, enc1=None):
         for i in range(0,len(self.dec)-1):
             hid = self.dec[i](hid)
@@ -123,77 +123,30 @@ class IAM4VP(nn.Module):
         self.readout = nn.Conv2d(64, 1, 1)
         self.mask_token = nn.Parameter(torch.zeros(10, hid_S, 16, 16))
         self.lp = LP(C, hid_S, N_S)
-    """ remove for loop.
-    def random_masking(z, mask_ratio=0.75):
-        B, T, C, H, W = z.shape
-        len_keep = int(T * (1. - mask_ratio))
-        noise = torch.rand(B, T, device=z.device)
-        ids_shuffle = torch.argsort(noise, dim=1)
-        mask = torch.ones(B, T, device=z.device)
-        mask.scatter_(1, ids_shuffle[:, :len_keep], 0)
-        mask = mask.bool()
-        z[mask] = 0
-        return z
-    """
-    def random_masking_train(self, z, t):
-        B, T, C , H, W = z.shape
-        for i in range(B):
-            rand_index = random.choices([0,1], weights=[0.5, 0.5], k=10)
-            for index, j in enumerate(rand_index):
-                if j==0:
-                    z[i,index,:,:,:] = self.mask_token[index,:,:,:]
-                if index >= int(t[i]/100):
-                    z[i,index,:,:,:] = self.mask_token[index,:,:,:]
-        return z
 
-    def forward(self, x_raw, y_raw=None, t=None, is_train=True):
-        if is_train==True:
-            B, T, C, H, W = x_raw.shape
-            x = x_raw.view(B*T, C, H, W)
-            y = y_raw.view(B*T, C, H, W)
+    def forward(self, x_raw, y_raw=None, t=None):
+        B, T, C, H, W = x_raw.shape
+        x = x_raw.view(B*T, C, H, W)
+        time_emb = self.time_mlp(t)
+        embed, skip = self.enc(x)
+        mask_token = self.mask_token.repeat(B,1,1,1,1)
 
-            time_emb = self.time_mlp(t)
+        for idx, pred in enumerate(y_raw):
+            embed2,_ = self.lp(pred)
+            mask_token[:,idx,:,:,:] = embed2
 
-            embed, skip = self.enc(x)
-            embed2, _ = self.enc(y)
+        _, C_, H_, W_ = embed.shape
 
-            _, C_, H_, W_ = embed.shape
+        z = embed.view(B, T, C_, H_, W_)
+        z2 = mask_token
+        z = torch.cat([z, z2], dim=1)
+        hid = self.hid(z, time_emb)
+        hid = hid.reshape(B*T, C_, H_, W_)
 
-            z = embed.view(B, T, C_, H_, W_)
-            z2 = embed2.lp(B, T, C_, H_, W_)
-
-            z2 = self.random_masking_train(z2, t)
-            z = torch.cat([z, z2], dim=1)
-            hid = self.hid(z, time_emb)
-            hid = hid.reshape(B*T, C_, H_, W_)
-
-            Y = self.dec(hid, skip)
-            Y = self.attn(Y)
-            Y = self.readout(Y)
-            return Y
-        else:
-            B, T, C, H, W = x_raw.shape
-            x = x_raw.view(B*T, C, H, W)
-            time_emb = self.time_mlp(t)
-            embed, skip = self.enc(x)
-            mask_token = self.mask_token.repeat(B,1,1,1,1)
-            for idx, pred in enumerate(y_raw):
-                embed2,_ = self.lp(pred)
-                mask_token[:,idx,:,:,:] = embed2
-
-            _, C_, H_, W_ = embed.shape
-
-            z = embed.view(B, T, C_, H_, W_)
-            z2 = mask_token
-            z = torch.cat([z, z2], dim=1)
-            hid = self.hid(z, time_emb)
-            hid = hid.reshape(B*T, C_, H_, W_)
-
-            Y = self.dec(hid, skip)
-            Y = self.attn(Y)
-            Y = self.readout(Y)
-            return Y
-
+        Y = self.dec(hid, skip)
+        Y = self.attn(Y)
+        Y = self.readout(Y)
+        return Y
 if __name__ == "__main__":
     import numpy as np
     model = IAM4VP([10,1,64,64])
@@ -202,5 +155,5 @@ if __name__ == "__main__":
     pred_list = []
     for timestep in range(10):
         t = torch.tensor(timestep*100).repeat(inputs.shape[0])
-        out = model(inputs, y_raw=pred_list, t=t, is_train=False)
+        out = model(inputs, y_raw=pred_list, t=t)
         pred_list.append(out)
