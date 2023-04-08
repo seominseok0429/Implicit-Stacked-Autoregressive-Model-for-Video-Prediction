@@ -26,8 +26,6 @@
 
 ### The current code takes longer to train than this paper, but has been updated to a much higher performance version.
 
-### I'm busy with other things, so code refactoring is delayed. [But,the code still works as it should now.] We are currently allowing everyone to push our code refactoring!
-
 
 ![gt](https://user-images.githubusercontent.com/33244972/228428350-33d705c7-61ee-4f08-b5f3-8b42c57a6ffb.gif)
 
