@@ -29,15 +29,6 @@
 
 ![gt](https://user-images.githubusercontent.com/33244972/228428350-33d705c7-61ee-4f08-b5f3-8b42c57a6ffb.gif)
 
-## NOTE
-
-Note that : The code uploaded on 2023.04.04 is slow to learn. If you want quick learning, please delete the val code.
-
-## TODO
-
-Need to add readme file.
-
-Need to add fine-tuning LP(Learnd Prior).
 
 ## Requirements
 ```
@@ -49,6 +40,10 @@ scikit-image==0.16.1
 sh data/moving_mnist/download_mmnist.sh
 python3 main.py
 ```
+
+## Pre-trained weight
+
+TODO
 
 ## Web Demo
 IAM4VP web deomo available at https://ovision.ai/ [it will plan 2023.08.01]
