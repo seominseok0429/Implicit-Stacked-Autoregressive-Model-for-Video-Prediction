@@ -43,7 +43,15 @@ python3 main.py
 
 ## Pre-trained weight
 
-TODO
+| Dataset  | Epoch | MSE | Weight | 
+| ------------- | ------------- | ------------- | ------------- |
+| Moving MNIST  | 100  | -  | -  |
+| Moving MNIST  | 200  | -  | -  |
+| Moving MNIST  | 300  | -  | -  |
+| Moving MNIST  | 400  | -  | -  |
+| Moving MNIST  | 500  | -  | -  |
+| Moving MNIST  | 600  | -  | -  |
+
 
 ## Web Demo
 IAM4VP web deomo available at https://ovision.ai/ [it will plan 2023.08.01]
