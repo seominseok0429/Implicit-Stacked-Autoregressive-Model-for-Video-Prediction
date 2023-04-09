@@ -43,7 +43,7 @@ python3 main.py
 
 | Dataset  | Epoch | MSE | Weight | 
 | ------------- | ------------- | ------------- | ------------- |
-| Moving MNIST  | 100  | -  | -  |
+| Moving MNIST  | 100  | 31.04  | -  |
 | Moving MNIST  | 200  | -  | -  |
 | Moving MNIST  | 300  | -  | -  |
 | Moving MNIST  | 400  | -  | -  |
