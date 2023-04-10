@@ -40,6 +40,7 @@ python3 main.py
 ```
 
 ## Pre-trained weight
+(We are in the process of reproducing the performance by running the refactored code and updating ckpt.)
 
 | Dataset  | Epoch | MSE | Weight | 
 | ------------- | ------------- | ------------- | ------------- |
