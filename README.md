@@ -25,8 +25,8 @@
 (This is not included in our report. prediction +10 hours)
 
 
-![gt](https://user-images.githubusercontent.com/33244972/228428350-33d705c7-61ee-4f08-b5f3-8b42c57a6ffb.gif)
-
+![gt](https://user-images.githubusercontent.com/33244972/231080850-6404ed14-873c-411d-ae15-139e8a22f89c.gif)
+![pred](https://user-images.githubusercontent.com/33244972/231080870-760ca587-7a48-4c6e-9587-d91c3c6d7cfb.gif)
 
 ## Requirements
 ```
@@ -45,7 +45,7 @@ python3 main.py
 | Dataset  | Epoch | MSE | Weight | 
 | ------------- | ------------- | ------------- | ------------- |
 | Moving MNIST  | 100  | 31.04  | [ckpt](https://drive.google.com/file/d/1mqIHwh-DLhvGfRWfaBoj5obtPCO4mNaL/view?usp=share_link)  |
-| Moving MNIST  | 200  | -  | -  |
+| Moving MNIST  | 200  | 27.04  | [ckpt](https://drive.google.com/file/d/1ERemZ49GD5nuFs_epBnHfuFumzlEsBHu/view?usp=share_link)  |
 | Moving MNIST  | 300  | -  | -  |
 | Moving MNIST  | 400  | -  | -  |
 | Moving MNIST  | 500  | -  | -  |
