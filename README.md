@@ -24,9 +24,6 @@
 ### Our typhoon data set and experimental results will be published soon. [2023.06.01] 
 (This is not included in our report. prediction +10 hours)
 
-
-![gt](https://user-images.githubusercontent.com/33244972/231080850-6404ed14-873c-411d-ae15-139e8a22f89c.gif)
-
 ![pred](https://user-images.githubusercontent.com/33244972/231080870-760ca587-7a48-4c6e-9587-d91c3c6d7cfb.gif)
 
 ## Requirements
