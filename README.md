@@ -44,7 +44,7 @@ python3 main.py
 | ------------- | ------------- | ------------- | ------------- |
 | Moving MNIST  | 100  | 31.04  | [ckpt](https://drive.google.com/file/d/1mqIHwh-DLhvGfRWfaBoj5obtPCO4mNaL/view?usp=share_link)  |
 | Moving MNIST  | 200  | 27.04  | [ckpt](https://drive.google.com/file/d/1ERemZ49GD5nuFs_epBnHfuFumzlEsBHu/view?usp=share_link)  |
-| Moving MNIST  | 300  | -  | -  |
+| Moving MNIST  | 300  | 24.92  | [ckpt](https://drive.google.com/file/d/15m-T-dzmqnvy7vreQFtl47c5JDtiunJI/view?usp=share_link)  |
 | Moving MNIST  | 400  | -  | -  |
 | Moving MNIST  | 500  | -  | -  |
 | Moving MNIST  | 600  | -  | -  |
