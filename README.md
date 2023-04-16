@@ -47,8 +47,11 @@ python3 main.py
 | Moving MNIST  | 300  | 24.92  | [ckpt](https://drive.google.com/file/d/15m-T-dzmqnvy7vreQFtl47c5JDtiunJI/view?usp=share_link)  |
 | Moving MNIST  | 400  | 23.56  | [ckpt](https://drive.google.com/file/d/1soT_a1Ycq8BZz_hYtXT9_Old6BeHL4ie/view?usp=share_link)  |
 | Moving MNIST  | 500  | 22.57  | [ckpt](https://drive.google.com/file/d/1jh_XCu4ofkvS7V525WNtEzTXQECdWG7n/view?usp=share_link)  |
-| Moving MNIST  | 600  | -  | -  |
-
+| Moving MNIST  | 600  | 21.67  | [ckpt](https://drive.google.com/file/d/1pflos2XC9AU2i3gSMXxsrnXCFTvHNXBV/view?usp=share_link)  |
+| Moving MNIST  | 800  | -  | -  |
+| Moving MNIST  | 1,000  | -  | -  |
+| Moving MNIST  | 1,500  | -  | -  |
+| Moving MNIST  | 2,000  | -  | -  |
 
 ## Web Demo
 IAM4VP web deomo available at https://ovision.ai/ [it will plan 2023.08.01]
