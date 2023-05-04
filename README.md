@@ -52,7 +52,7 @@ python3 main.py
 | Moving MNIST  | 1,000  | 19.53  | [ckpt](-)  |
 | Moving MNIST  | 1,300  | 18.57  | [ckpt](-)  |
 | Moving MNIST  | 1,500  | 18.03  | [ckpt](-)  |
-| Moving MNIST  | 2,000  | -  | [ckpt](-)  |
+| Moving MNIST  | 2,000  | 17.20 (paper:16.9)  | [ckpt](-)  |
 
 ## Web Demo
 IAM4VP web deomo available at https://ovision.ai/ [it will plan 2023.08.01]
