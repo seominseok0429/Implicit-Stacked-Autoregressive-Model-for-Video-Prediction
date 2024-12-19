@@ -66,10 +66,5 @@ We thank the authors of that code.
 ## Citation
 
 ```
-@article{seo2023implicit,
-  title={Implicit Stacked Autoregressive Model for Video Prediction},
-  author={Seo, Minseok and Lee, Hakjin and Kim, Doyi and Seo, Junghoon},
-  journal={arXiv preprint arXiv:2303.07849},
-  year={2023}
-}
+
 ```
